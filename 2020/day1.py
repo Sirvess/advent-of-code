@@ -10,7 +10,7 @@ def findMatchingEntries(targetSum,numElements,inData):
             if (targetSum - x) in inData:
                 return [x,targetSum-x]
         else:
-            nextIteration = findMatchingEntries(targetSum-x,numElements-1,inData);
+            nextIteration = findMatchingEntries(targetSum-x,numElements-1,filter(lambda a: targetSum - x - a >= 0,inData));
             if(nextIteration != False):
                 return [*nextIteration,x];
     return False
