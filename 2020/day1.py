@@ -8,21 +8,24 @@ import functools
 
 def findMatchingEntries(targetSum, numElements, inData):
     for x in inData:
-        if(numElements == 2):
+        if numElements == 2:
             if (targetSum - x) in inData:
-                return [x, targetSum-x]
+                return [x, targetSum - x]
         else:
             nextIteration = findMatchingEntries(
-                targetSum-x, numElements-1, filter(lambda a: targetSum - x - a >= 0, inData))
-            if(nextIteration != False):
+                targetSum - x,
+                numElements - 1,
+                filter(lambda a: targetSum - x - a >= 0, inData),
+            )
+            if nextIteration != False:
                 return [*nextIteration, x]
     return False
 
 
 def printResults(results):
-    if(results):
+    if results:
         print("Matching entries: ", results)
-        print("Entries multiplied: ", functools.reduce(lambda a, b: a*b, results))
+        print("Entries multiplied: ", functools.reduce(lambda a, b: a * b, results))
     else:
         print("Found no matching entries.")
 
