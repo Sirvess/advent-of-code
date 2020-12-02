@@ -1,4 +1,3 @@
-from numpy import loadtxt
 import functools
 
 # Returns list of entries that fit criteria
@@ -15,7 +14,7 @@ def findMatchingEntries(targetSum, numElements, inData):
             nextIteration = findMatchingEntries(
                 targetSum - x,
                 numElements - 1,
-                filter(lambda a: targetSum - x - a >= 0, inData),
+                list(filter(lambda a: targetSum - x - a >= 0, inData)),
             )
             if nextIteration != False:
                 return [*nextIteration, x]
@@ -30,13 +29,19 @@ def printResults(results):
         print("Found no matching entries.")
 
 
+def formatInData(data):
+    return list(map(lambda x: int(x[:-1]), data))
+
+
 if __name__ == "__main__":
     f = open("day1Input.txt", "r")
-    inData = loadtxt(f, int)
+    inData = f.readlines()
     f.close()
 
-    partA = findMatchingEntries(2020, 2, inData)
+    formattedData = formatInData(inData)
+
+    partA = findMatchingEntries(2020, 2, formattedData)
     printResults(partA)
 
-    partB = findMatchingEntries(2020, 3, inData)
+    partB = findMatchingEntries(2020, 3, formattedData)
     printResults(partB)
