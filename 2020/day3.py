@@ -1,11 +1,6 @@
 import re
 import functools
 
-
-def formatInput(data):
-    return list(map(lambda row: row[:-1], data))
-
-
 # Define chosen slope by setting steps right and down per iteration
 def countTrees(right, down, data):
     i = 0
@@ -34,10 +29,8 @@ partBpatterns = [
 
 if __name__ == "__main__":
     f = open("day3Input.txt", "r")
-    inData = f.readlines()
+    data = f.read().splitlines()
     f.close()
-
-    data = formatInput(inData)
 
     # Part A
     print("Part A trees: ", countTrees(3, 1, data))
