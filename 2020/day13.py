@@ -36,9 +36,7 @@ if __name__ == "__main__":
     firstpos = 0
     lcm = incr
     for item in dataB[1:]:
-        while True:
-            if (firstpos + item["rem"]) % item["n"] == 0:
-                incr = lcmCustom(incr, item["n"])
-                break
+        while (firstpos + item["rem"]) % item["n"] != 0:
             firstpos += incr
+        incr = lcmCustom(incr, item["n"])
     print("Part B: ", firstpos)
