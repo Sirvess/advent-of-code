@@ -1,13 +1,9 @@
-from copy import deepcopy
-
-
 if __name__ == "__main__":
-    # f = open("day24Test.txt", "r")
     f = open("day24Input.txt", "r")
     data = f.read().splitlines()
     f.close()
 
-    tilepos = {}
+    tiles = {}
     for j, row in enumerate(data):
         pos = [0, 0]
         i = 0
@@ -42,11 +38,57 @@ if __name__ == "__main__":
                 pos[1] += 1
 
         key = tuple(pos)
-        if key in tilepos:
-            if tilepos[key] == "white":
-                tilepos[key] = "black"
+        if key in tiles:
+            if tiles[key] == "white":
+                tiles[key] = "black"
             else:
-                tilepos[key] = "white"
+                tiles[key] = "white"
         else:
-            tilepos[key] = "black"
-    print("Part A:", sum([1 for key in tilepos if tilepos[key] == "black"]))
+            tiles[key] = "black"
+    blacktiles = {key: tiles[key] for key in tiles if tiles[key] == "black"}
+    print("Part A:", sum([1 for key in blacktiles]))
+
+    def fliptiles(blacktiles):
+        blacktilesnextiter = {}
+        for tile in blacktiles:
+            neighbs = [
+                (tile[0] + 2, tile[1]),
+                (tile[0] - 2, tile[1]),
+                (tile[0] - 1, tile[1] - 1),
+                (tile[0] + 1, tile[1] - 1),
+                (tile[0] - 1, tile[1] + 1),
+                (tile[0] + 1, tile[1] + 1),
+            ]
+            blackcount = 0
+            tocheckwhites = []
+            for neighb in neighbs:
+                if neighb in blacktiles:
+                    blackcount += 1
+                else:
+                    tocheckwhites.append(neighb)
+
+            if blackcount == 1 or blackcount == 2:
+                blacktilesnextiter[tile] = "black"
+
+            for tile in tocheckwhites:
+                neighbs = [
+                    (tile[0] + 2, tile[1]),
+                    (tile[0] - 2, tile[1]),
+                    (tile[0] - 1, tile[1] - 1),
+                    (tile[0] + 1, tile[1] - 1),
+                    (tile[0] - 1, tile[1] + 1),
+                    (tile[0] + 1, tile[1] + 1),
+                ]
+                blackcount = 0
+                for neighb in neighbs:
+                    if neighb in blacktiles:
+                        blackcount += 1
+                if blackcount == 2:
+                    blacktilesnextiter[tile] = "black"
+        return blacktilesnextiter
+
+    iterations = 100
+    curr = blacktiles
+    for i in range(iterations):
+        curr = fliptiles(curr)
+    print("Part B:", sum([1 for tile in curr]))
