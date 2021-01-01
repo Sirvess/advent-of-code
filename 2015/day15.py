@@ -16,19 +16,16 @@ if __name__ == "__main__":
     }
     f.close()
 
-    ingredients = set(data)
-    dosage = {ingredient: 0 for ingredient in ingredients}
-
     maxscore = 0
     maxw500cal = 0
-    maxingredientsum = 100
-    for chocolate in range(0, maxingredientsum + 1):
-        for candy in range(0, maxingredientsum + 1):
-            for sprinkles in range(0, maxingredientsum + 1):
-                for butterscotch in range(0, maxingredientsum + 1):
+    ingredientsum = 100
+    for chocolate in range(0, ingredientsum + 1):
+        for candy in range(0, ingredientsum + 1):
+            for sprinkles in range(0, ingredientsum + 1):
+                for butterscotch in range(0, ingredientsum + 1):
                     if (
                         not chocolate + candy + sprinkles + butterscotch
-                        == maxingredientsum
+                        == ingredientsum
                     ):
                         continue
 
@@ -38,7 +35,7 @@ if __name__ == "__main__":
                     texscore = 0
                     calscore = 0
 
-                    for ingredient in ingredients:
+                    for ingredient in data:
                         if ingredient == "Sprinkles":
                             amount = sprinkles
                         elif ingredient == "Butterscotch":
@@ -54,18 +51,16 @@ if __name__ == "__main__":
                         texscore += amount * data[ingredient]["tex"]
                         calscore += amount * data[ingredient]["cal"]
 
-                    capscore = capscore if capscore > 0 else 0
-                    durascore = durascore if durascore > 0 else 0
-                    flavscore = flavscore if flavscore > 0 else 0
-                    texscore = texscore if texscore > 0 else 0
-                    calscore = calscore if calscore > 0 else 0
+                    capscore = max(capscore, 0)
+                    durascore = max(durascore, 0)
+                    flavscore = max(flavscore, 0)
+                    texscore = max(texscore, 0)
+                    calscore = max(calscore, 0)
 
                     score = capscore * durascore * flavscore * texscore
                     if calscore == 500:
-                        if score > maxw500cal:
-                            maxw500cal = score
-                    if score > maxscore:
-                        maxscore = score
+                        maxw500cal = max(score, maxw500cal)
+                    maxscore = max(maxscore, score)
 
     print("Part A:", maxscore)
     print("Part B:", maxw500cal)
