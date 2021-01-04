@@ -29,7 +29,7 @@ if __name__ == "__main__":
         if indexval >= data:
             print("Part A:", index)
         else:
-            print("Not enough iterations, increasing...")
+            print("Not enough iterations, increasing.")
         iterations = iterations * 10
 
     indexval = 0
@@ -39,5 +39,5 @@ if __name__ == "__main__":
         if indexval >= data:
             print("Part B:", index)
         else:
-            print("Not enough iterations, increasing...")
+            print("Not enough iterations, increasing.")
         iterations = iterations * 10
