@@ -2,22 +2,14 @@ import itertools
 
 if __name__ == "__main__":
     f = open("day3.in", "r")
-    data = [
-        [int(y) for y in x.strip().split(" ") if not y == ""]
-        for x in f.read().splitlines()
-    ]
+    data = [[int(y) for y in x.strip().split()] for x in f.read().splitlines()]
     f.close()
 
     def getValidTriangleCount(data):
         impossiblecount = 0
-        for triangle in data:
-            permutations = itertools.permutations(triangle)
-            faulty = False
-            for permutation in permutations:
-                sidesum = permutation[0] + permutation[1]
-                if permutation[0] + permutation[1] <= permutation[2]:
-                    faulty = True
-            if faulty:
+        sortedTriangles = [sorted(x) for x in data]
+        for triangle in sortedTriangles:
+            if triangle[0] + triangle[1] <= triangle[2]:
                 impossiblecount += 1
         return len(data) - impossiblecount
 
