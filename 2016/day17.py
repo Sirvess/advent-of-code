@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
     queue = [(data, (0, 0))]
     gridsize = 4
-    gridr = range(4)
+    gridr = range(gridsize)
 
     done = False
     foundpaths = []
