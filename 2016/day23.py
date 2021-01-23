@@ -11,6 +11,28 @@ if __name__ == "__main__":
             instr = instructions[i]
             actiontype = instr[0]
 
+            if i + 5 < len(instructions):
+                cominginstrs = [ins for ins in instructions[i : i + 6]]
+                if [ins[0] for ins in cominginstrs] == [
+                    "cpy",
+                    "inc",
+                    "dec",
+                    "jnz",
+                    "dec",
+                    "jnz",
+                ]:
+                    # Loop, reduce it
+                    firstarg = cominginstrs[0][1]
+                    if firstarg in ["a", "b", "c", "d"]:
+                        firstarg = registers[firstarg]
+                    secondarg = cominginstrs[-1][1]
+                    if secondarg in ["a", "b", "c", "d"]:
+                        secondarg = registers[secondarg]
+                    endregindex = cominginstrs[1][1]
+                    registers[endregindex] += int(firstarg) * int(secondarg)
+
+                    i += 6
+                    continue
             if actiontype == "cpy":
                 fr = instr[1]
                 to = instr[2]
