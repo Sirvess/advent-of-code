@@ -9,19 +9,20 @@ if __name__ == "__main__":
             newnum = (newnum * factor) % 2147483647
         return newnum
 
+    def numgen(iterations, startnum, factor, divisor):
+        i = 0
+        prevnum = startnum
+        while i < iterations:
+            prevnum = getnextnum(prevnum, factor, divisor)
+            yield bin(prevnum)[-16:]
+            i += 1
+
     def getmatchcount(iterations, a, b, diva, divb):
-        preva = a
-        prevb = b
         factora = 16807
         factorb = 48271
-        matchcount = 0
-        for i in range(iterations):
-            preva = getnextnum(preva, factora, diva)
-            prevb = getnextnum(prevb, factorb, divb)
-            newa, newb = [bin(x)[-16:] for x in [preva, prevb]]
-            if newa == newb:
-                matchcount += 1
-        return matchcount
+        alist = (x for x in numgen(iterations, a, factora, diva))
+        blist = (x for x in numgen(iterations, b, factorb, divb))
+        return sum((1 for x in zip(alist, blist) if x[0] == x[1]))
 
     astart, bstart = [int(x.split()[-1]) for x in data]
     print("Part A:", getmatchcount(40000000, astart, bstart, 1, 1))
