@@ -3,7 +3,7 @@ if __name__ == "__main__":
     data = [int(x) for x in f.read().splitlines()]
     f.close()
 
-    print("Part a", sum(data))
+    print("Part A:", sum(data))
 
     frequencies = set()
     curr, found = 0, False
@@ -11,7 +11,7 @@ if __name__ == "__main__":
         for x in data:
             curr += x
             if curr in frequencies:
-                print("Part B", curr)
+                print("Part B:", curr)
                 found = True
                 break
             frequencies.add(curr)
