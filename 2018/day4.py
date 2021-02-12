@@ -28,3 +28,14 @@ if __name__ == "__main__":
     maxguard = max(guardssum, key=lambda g: guardssum[g])
     maxminute = guards[maxguard].index(max(guards[maxguard]))
     print("Part A:", int(maxguard[1:]) * maxminute)
+
+    # Type (id, maxminutes, indexOfMinute)
+    gmax = max(
+        [
+            (guard, max(guards[guard]), guards[guard].index(max(guards[guard])))
+            for guard in guards
+        ],
+        key=lambda x: x[1],
+    )
+
+    print("Part B:", int(gmax[0][1:]) * gmax[2])
