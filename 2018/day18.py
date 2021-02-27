@@ -57,27 +57,21 @@ if __name__ == "__main__":
     fieldgenerator = fieldgen(data)
     loop = []
     loopstart = 0
-    looplength = 0
     foundnumbers = set()
-    loopset = set()
     iterations = 0
     while True:
         score = next(fieldgenerator)
         if score in foundnumbers:
             if loopstart == 0:
                 loopstart = iterations
-            if score in loopset and len(loop) == 28:
-                # HACK: Somewhat naive, entire round throuh loop.
+            if score in loop and len(loop) == 28:
+                # HACK: Somewhat naive, as might be duplicates in loop.
                 # Found actual looplength through manual testing
                 break
-            looplength += 1
-            loopset.add(score)
             loop.append(score)
         else:
             loopstart = 0
-            looplength = 0
             loop = []
-            loopset = set()
         foundnumbers.add(score)
         iterations += 1
-    print("Part B:", loop[((1000000000 - loopstart - 1) % looplength)])
+    print("Part B:", loop[((1000000000 - loopstart - 1) % len(loop))])
