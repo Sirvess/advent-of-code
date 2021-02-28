@@ -38,7 +38,9 @@ def runcomputer(data, inputs):
             i += 2
         elif currcode == "04":
             fst = memory[i + 1]
-            print("OUTPUT", memory[fst])
+            if currmode[-1] == "0":
+                fst = memory[fst]
+            print("OUTPUT", fst)
             i += 2
         elif currcode == "05":
             fst = memory[i + 1]
