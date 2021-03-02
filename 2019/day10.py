@@ -50,7 +50,8 @@ if __name__ == "__main__":
         for c in asteroidangles
     }
 
-    moddedangles = {(x + 90 + 360) % 360: sortedangles[x] for x in sortedangles}
+    # Normalized angles, in degrees. North is 0 degrees
+    normalizedangles = {(x + 90 + 360) % 360: sortedangles[x] for x in sortedangles}
 
     def incrementdegree(deg, rems):
         anglesnotequal = list(filter(lambda x: not x == deg, rems))
@@ -66,14 +67,14 @@ if __name__ == "__main__":
             return outputangles[0] + deg if outputangles[0] + deg < 360 else 0
 
     degree = 0
-    remangles = list(moddedangles)
+    remangles = list(normalizedangles)
     vaporized = []
     while len(remangles) > 0:
-        tovaporize = moddedangles[degree].pop(0)
+        tovaporize = normalizedangles[degree].pop(0)
         vaporized.append((tovaporize[0] + startpos[0], tovaporize[1] + startpos[1]))
-        if len(moddedangles[degree]) == 0:
-            del moddedangles[degree]
-            remangles = list(moddedangles)
+        if len(normalizedangles[degree]) == 0:
+            del normalizedangles[degree]
+            remangles = list(normalizedangles)
         degree = incrementdegree(degree, remangles)
 
     print("Part B:", vaporized[199][0] * 100 + vaporized[199][1])
