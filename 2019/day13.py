@@ -169,3 +169,28 @@ if __name__ == "__main__":
 
     tileids = output[2::3]
     print("Part A:", len([x for x in tileids if x == 2]))
+
+    mem[0] = 2
+    inputarr = []
+    computer = computergen(mem.copy(), inputarr)
+    ballx, paddlex, score = [None for i in range(3)]
+    while True:
+        try:
+            fst, snd, trd = [next(computer) for i in range(3)]
+            if fst == -1 and snd == 0:
+                score = trd
+            if not (fst == -1 and snd == 0) and trd == 3:
+                paddlex = fst
+            elif not (fst == -1 and snd == 0) and trd == 4:
+                ballx = fst
+            if not ballx == None and not paddlex == None:
+                if ballx > paddlex:
+                    inputarr.append(1)
+                elif ballx < paddlex:
+                    inputarr.append(-1)
+                elif ballx == paddlex:
+                    inputarr.append(0)
+                ballx = None
+        except StopIteration:
+            break
+    print("Part B:", score)
